@@ -26,3 +26,10 @@ class Session {
         const [result] = await promisePool.execute(query, [JSON.stringify(textBlocks), sessionId]);
         return result.affectedRows;
     }
+
+    // Save edited PDF
+    static async saveEditedPDF(sessionId, pdfBuffer) {
+        const query = 'UPDATE sessions SET edited_pdf = ?, status = 'saved', updated_at = NOW() WHERE session_id = ?';
+        const [result] = await promisePool.execute(query, [pdfBuffer, sessionId]);
+        return result.affectedRows;
+    }
