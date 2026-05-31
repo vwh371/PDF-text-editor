@@ -33,3 +33,29 @@ class Session {
         const [result] = await promisePool.execute(query, [pdfBuffer, sessionId]);
         return result.affectedRows;
     }
+
+    // Get edited PDF
+    static async getEditedPDF(sessionId) {
+        const query = 'SELECT edited_pdf, original_pdf FROM sessions WHERE session_id = ?';
+        const [rows] = await promisePool.execute(query, [sessionId]);
+        return rows[0];
+    }
+
+    // Add edit history
+    static async addEditHistory(sessionId, blockId, oldText, newText, oldFontSize, newFontSize, oldColor, newColor) {
+        const query = `
+            INSERT INTO edit_history (session_id, block_id, old_text, new_text, old_font_size, new_font_size, old_color, new_color)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        const [result] = await promisePool.execute(query, [
+            sessionId, blockId, oldText, newText, oldFontSize, newFontSize, oldColor, newColor
+        ]);
+        return result.insertId;
+    }
+
+    // Get edit history
+    static async getEditHistory(sessionId) {
+        const query = 'SELECT * FROM edit_history WHERE session_id = ? ORDER BY edited_at DESC';
+        const [rows] = await promisePool.execute(query, [sessionId]);
+        return rows;
+    }
