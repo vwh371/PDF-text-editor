@@ -12,3 +12,10 @@ class Session {
         ]);
         return result.insertId;
     }
+
+    // Get session by ID
+    static async findBySessionId(sessionId) {
+        const query = 'SELECT * FROM sessions WHERE session_id = ?';
+        const [rows] = await promisePool.execute(query, [sessionId]);
+        return rows[0];
+    }
