@@ -19,3 +19,10 @@ class Session {
         const [rows] = await promisePool.execute(query, [sessionId]);
         return rows[0];
     }
+
+    // Update text blocks
+    static async updateTextBlocks(sessionId, textBlocks) {
+        const query = 'UPDATE sessions SET text_blocks = ?, status = 'editing', updated_at = NOW() WHERE session_id = ?';
+        const [result] = await promisePool.execute(query, [JSON.stringify(textBlocks), sessionId]);
+        return result.affectedRows;
+    }
