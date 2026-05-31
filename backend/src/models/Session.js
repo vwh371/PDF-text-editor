@@ -33,3 +33,10 @@ class Session {
         const [result] = await promisePool.execute(query, [pdfBuffer, sessionId]);
         return result.affectedRows;
     }
+
+    // Get edited PDF
+    static async getEditedPDF(sessionId) {
+        const query = 'SELECT edited_pdf, original_pdf FROM sessions WHERE session_id = ?';
+        const [rows] = await promisePool.execute(query, [sessionId]);
+        return rows[0];
+    }
