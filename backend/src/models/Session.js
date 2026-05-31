@@ -52,3 +52,10 @@ class Session {
         ]);
         return result.insertId;
     }
+
+    // Get edit history
+    static async getEditHistory(sessionId) {
+        const query = 'SELECT * FROM edit_history WHERE session_id = ? ORDER BY edited_at DESC';
+        const [rows] = await promisePool.execute(query, [sessionId]);
+        return rows;
+    }
