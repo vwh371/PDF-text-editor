@@ -59,3 +59,13 @@ class Session {
         const [rows] = await promisePool.execute(query, [sessionId]);
         return rows;
     }
+
+    // Delete old sessions (older than 24 hours)
+    static async deleteOldSessions() {
+        const query = 'DELETE FROM sessions WHERE created_at < DATE_SUB(NOW(), INTERVAL 24 HOUR) AND status = 'saved'';
+        const [result] = await promisePool.execute(query);
+        return result.affectedRows;
+    }
+}
+
+module.exports = Session;
