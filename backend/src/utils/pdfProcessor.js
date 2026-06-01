@@ -112,3 +112,12 @@ class PDFProcessor {
             if (block.page < pages.length && block.text !== block.originalText) {
                 const page = pages[block.page];
                 
+                // Whiteout old text
+                page.drawRectangle({
+                    x: block.x - 3,
+                    y: block.y - block.fontSize + 5,
+                    width: Math.max(block.width + 6, block.text.length * (block.fontSize * 0.6) + 6),
+                    height: block.fontSize + 8,
+                    color: rgb(1, 1, 1),
+                });
+                
