@@ -121,3 +121,24 @@ class PDFProcessor {
                     color: rgb(1, 1, 1),
                 });
                 
+                // Draw new text
+                const hexColor = block.color.replace('#', '');
+                const r = parseInt(hexColor.substring(0, 2), 16) / 255;
+                const g = parseInt(hexColor.substring(2, 4), 16) / 255;
+                const b = parseInt(hexColor.substring(4, 6), 16) / 255;
+                
+                page.drawText(block.text, {
+                    x: block.x,
+                    y: block.y,
+                    size: block.fontSize,
+                    font: font,
+                    color: rgb(r, g, b),
+                });
+            }
+        }
+        
+        return await pdfDoc.save();
+    }
+}
+
+module.exports = PDFProcessor;
