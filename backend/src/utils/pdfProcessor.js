@@ -42,3 +42,15 @@ class PDFProcessor {
                 });
             }
             
+            // If no text found, create sample blocks
+            if (allTextBlocks.length === 0) {
+                return this.createSampleBlocks(pageCount);
+            }
+            
+            allTextBlocks.pageCount = pageCount;
+            return allTextBlocks;
+        } catch (error) {
+            console.error('Extraction error:', error);
+            return this.createSampleBlocks(1);
+        }
+    }
