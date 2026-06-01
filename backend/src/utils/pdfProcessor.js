@@ -101,3 +101,14 @@ class PDFProcessor {
         blocks.pageCount = pageCount;
         return blocks;
     }
+
+    // Apply edits to PDF and return new PDF buffer
+    static async applyEditsToPDF(originalPdfBuffer, textBlocks) {
+        const pdfDoc = await PDFDocument.load(originalPdfBuffer);
+        const pages = pdfDoc.getPages();
+        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        
+        for (const block of textBlocks) {
+            if (block.page < pages.length && block.text !== block.originalText) {
+                const page = pages[block.page];
+                
