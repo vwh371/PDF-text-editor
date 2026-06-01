@@ -54,3 +54,50 @@ class PDFProcessor {
             return this.createSampleBlocks(1);
         }
     }
+
+    // Create sample text blocks for demo
+    static createSampleBlocks(pageCount = 1) {
+        const blocks = [];
+        for (let page = 0; page < pageCount; page++) {
+            blocks.push(
+                {
+                    id: `p${page}_sample_1`,
+                    page: page,
+                    text: "PDFlow Edit Pro - Professional PDF Text Editor",
+                    originalText: "PDFlow Edit Pro - Professional PDF Text Editor",
+                    x: 100,
+                    y: 750,
+                    fontSize: 24,
+                    color: '#2c3e50',
+                    width: 500,
+                    height: 30
+                },
+                {
+                    id: `p${page}_sample_2`,
+                    page: page,
+                    text: "Edit text directly without converting to Word format",
+                    originalText: "Edit text directly without converting to Word format",
+                    x: 100,
+                    y: 700,
+                    fontSize: 14,
+                    color: '#34495e',
+                    width: 450,
+                    height: 20
+                },
+                {
+                    id: `p${page}_sample_3`,
+                    page: page,
+                    text: "Changes are saved directly as PDF - no conversion needed!",
+                    originalText: "Changes are saved directly as PDF - no conversion needed!",
+                    x: 100,
+                    y: 670,
+                    fontSize: 14,
+                    color: '#27ae60',
+                    width: 480,
+                    height: 20
+                }
+            );
+        }
+        blocks.pageCount = pageCount;
+        return blocks;
+    }
