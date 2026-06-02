@@ -34,3 +34,9 @@ const limiter = rateLimit({
     max: 100
 });
 app.use('/api/', limiter);
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
