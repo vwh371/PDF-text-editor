@@ -237,3 +237,16 @@ app.post('/api/reset/:sessionId', async (req, res) => {
         res.status(500).json({ error: 'Failed to reset' });
     }
 });
+
+// Get edit history
+app.get('/api/history/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const history = await Session.getEditHistory(sessionId);
+        res.json({ history });
+    } catch (error) {
+        console.error('History error:', error);
+        res.status(500).json({ error: 'Failed to get history' });
+    }
+});
+
