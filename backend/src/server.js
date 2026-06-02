@@ -207,3 +207,33 @@ app.post('/api/download-pdf/:sessionId', async (req, res) => {
         res.status(500).json({ error: 'Failed to generate PDF: ' + error.message });
     }
 });
+
+// Reset to original text blocks
+app.post('/api/reset/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const session = await Session.findBySessionId(sessionId);
+        
+        if (!session) {
+            return res.status(404).json({ error: 'Session not found' });
+        }
+        
+        // Reset to original text blocks
+        const originalBlocks = JSON.parse(session.text_blocks);
+        const resetBlocks = originalBlocks.map(block => ({
+            ...block,
+            text: block.originalText || block.text
+        }));
+        
+        await Session.updateTextBlocks(sessionId, resetBlocks);
+        
+        res.json({
+            success: true,
+            textBlocks: resetBlocks,
+            message: 'Reset to original text'
+        });
+    } catch (error) {
+        console.error('Reset error:', error);
+        res.status(500).json({ error: 'Failed to reset' });
+    }
+});
