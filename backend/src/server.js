@@ -177,3 +177,21 @@ app.post('/api/update-blocks/:sessionId', async (req, res) => {
         res.status(500).json({ error: 'Failed to update text blocks' });
     }
 });
+
+// Generate and download edited PDF
+app.post('/api/download-pdf/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const { textBlocks } = req.body;
+        
+        const session = await Session.findBySessionId(sessionId);
+        if (!session) {
+            return res.status(404).json({ error: 'Session not found' });
+        }
+        
+        // Apply edits to PDF
+        const editedPdfBuffer = await PDFProcessor.applyEditsToPDF(
+            session.original_pdf,
+            textBlocks
+        );
+        
