@@ -195,3 +195,15 @@ app.post('/api/download-pdf/:sessionId', async (req, res) => {
             textBlocks
         );
         
+        // Save edited PDF to database
+        await Session.saveEditedPDF(sessionId, editedPdfBuffer);
+        
+        // Send the edited PDF for download
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=PDFlow_Edit_Edited.pdf');
+        res.send(editedPdfBuffer);
+    } catch (error) {
+        console.error('Download error:', error);
+        res.status(500).json({ error: 'Failed to generate PDF: ' + error.message });
+    }
+});
