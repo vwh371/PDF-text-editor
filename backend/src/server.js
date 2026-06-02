@@ -171,3 +171,9 @@ app.post('/api/update-blocks/:sessionId', async (req, res) => {
             );
         }
         
+        res.json({ success: true, message: 'Text blocks updated' });
+    } catch (error) {
+        console.error('Update blocks error:', error);
+        res.status(500).json({ error: 'Failed to update text blocks' });
+    }
+});
