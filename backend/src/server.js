@@ -65,3 +65,15 @@ setInterval(async () => {
         console.log(`🧹 Cleaned up ${deleted} old sessions`);
     }
 }, 60 * 60 * 1000);
+
+// Upload PDF endpoint
+app.post('/api/upload', upload.single('pdf'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' });
+        }
+
+        const sessionId = Date.now().toString() + '-' + Math.random().toString(36).substr(2, 16);
+        const fileSize = req.file.size;
+        const fileName = req.file.originalname;
+        
