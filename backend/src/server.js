@@ -104,3 +104,21 @@ app.post('/api/upload', upload.single('pdf'), async (req, res) => {
         res.status(500).json({ error: 'Failed to process PDF: ' + error.message });
     }
 });
+
+// Get PDF data for rendering
+app.get('/api/pdf-data/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const session = await Session.findBySessionId(sessionId);
+        
+        if (!session) {
+            return res.status(404).json({ error: 'Session not found' });
+        }
+        
+        res.setHeader('Content-Type', 'application/pdf');
+        res.send(session.original_pdf);
+    } catch (error) {
+        console.error('PDF data error:', error);
+        res.status(500).json({ error: 'Failed to get PDF data' });
+    }
+});
