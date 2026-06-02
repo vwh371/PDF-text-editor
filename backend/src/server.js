@@ -54,3 +54,14 @@ const upload = multer({
         }
     }
 });
+
+// Test database connection on startup
+testConnection();
+
+// Clean up old sessions every hour
+setInterval(async () => {
+    const deleted = await Session.deleteOldSessions();
+    if (deleted > 0) {
+        console.log(`🧹 Cleaned up ${deleted} old sessions`);
+    }
+}, 60 * 60 * 1000);
