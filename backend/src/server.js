@@ -142,3 +142,15 @@ app.get('/api/text-blocks/:sessionId', async (req, res) => {
         res.status(500).json({ error: 'Failed to get text blocks' });
     }
 });
+
+// Update text blocks
+app.post('/api/update-blocks/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const { textBlocks, editHistory } = req.body;
+        
+        const session = await Session.findBySessionId(sessionId);
+        if (!session) {
+            return res.status(404).json({ error: 'Session not found' });
+        }
+        
