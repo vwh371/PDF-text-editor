@@ -250,3 +250,18 @@ app.get('/api/history/:sessionId', async (req, res) => {
     }
 });
 
+// Health check endpoint
+app.get('/api/health', async (req, res) => {
+    const dbConnected = await testConnection();
+    res.json({
+        status: 'ok',
+        database: dbConnected ? 'connected' : 'disconnected',
+        timestamp: new Date().toISOString()
+    });
+});
+
+app.listen(PORT, () => {
+    console.log(`🚀 PDFlow Edit Pro Backend running on http://localhost:${PORT}`);
+    console.log(`📄 Ready to accept PDF uploads`);
+    console.log(`💾 MySQL database integration active`);
+});
