@@ -77,3 +77,17 @@ app.post('/api/upload', upload.single('pdf'), async (req, res) => {
         const fileSize = req.file.size;
         const fileName = req.file.originalname;
         
+        // Extract text blocks from PDF
+        const textBlocks = await PDFProcessor.extractTextWithCoordinates(req.file.buffer);
+        const pageCount = textBlocks.pageCount || 1;
+        
+        // Save to database
+        await Session.create(
+            sessionId,
+            fileName,
+            fileSize,
+            pageCount,
+            req.file.buffer,
+            textBlocks
+        );
+        
