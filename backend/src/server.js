@@ -91,3 +91,16 @@ app.post('/api/upload', upload.single('pdf'), async (req, res) => {
             textBlocks
         );
         
+        res.json({
+            success: true,
+            sessionId,
+            textBlocks,
+            pageCount,
+            fileName,
+            message: 'PDF uploaded and processed successfully'
+        });
+    } catch (error) {
+        console.error('Upload error:', error);
+        res.status(500).json({ error: 'Failed to process PDF: ' + error.message });
+    }
+});
