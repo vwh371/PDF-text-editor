@@ -154,3 +154,20 @@ app.post('/api/update-blocks/:sessionId', async (req, res) => {
             return res.status(404).json({ error: 'Session not found' });
         }
         
+        // Update text blocks in database
+        await Session.updateTextBlocks(sessionId, textBlocks);
+        
+        // Save edit history if provided
+        if (editHistory) {
+            await Session.addEditHistory(
+                sessionId,
+                editHistory.blockId,
+                editHistory.oldText,
+                editHistory.newText,
+                editHistory.oldFontSize,
+                editHistory.newFontSize,
+                editHistory.oldColor,
+                editHistory.newColor
+            );
+        }
+        
