@@ -30,3 +30,13 @@ router.post('/', upload.single('pdf'), async (req, res) => {
                 error: 'No file uploaded' 
             });
         }
+
+        // Generate unique session ID
+        const sessionId = Date.now().toString() + '-' + 
+                         Math.random().toString(36).substr(2, 16);
+        
+        const fileSize = req.file.size;
+        const fileName = req.file.originalname;
+        
+        console.log(`📄 Processing PDF: ${fileName} (${fileSize} bytes)`);
+        
