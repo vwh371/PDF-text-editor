@@ -17,3 +17,16 @@ const upload = multer({
         }
     }
 });
+
+// @route   POST /api/upload
+// @desc    Upload PDF file
+// @access  Public
+router.post('/', upload.single('pdf'), async (req, res) => {
+    try {
+        // Check if file exists
+        if (!req.file) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'No file uploaded' 
+            });
+        }
