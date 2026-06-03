@@ -56,3 +56,22 @@ router.post('/', upload.single('pdf'), async (req, res) => {
             textBlocks
         );
         
+        console.log(`💾 Session created: ${sessionId}`);
+        
+        res.json({
+            success: true,
+            sessionId,
+            textBlocks,
+            pageCount,
+            fileName,
+            message: 'PDF uploaded and processed successfully'
+        });
+        
+    } catch (error) {
+        console.error('Upload error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to process PDF: ' + error.message 
+        });
+    }
+});
