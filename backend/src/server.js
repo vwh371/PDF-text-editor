@@ -76,11 +76,11 @@ app.post('/api/upload', upload.single('pdf'), async (req, res) => {
         const sessionId = Date.now().toString() + '-' + Math.random().toString(36).substr(2, 16);
         const fileSize = req.file.size;
         const fileName = req.file.originalname;
-        
+
         // Extract text blocks from PDF
         const textBlocks = await PDFProcessor.extractTextWithCoordinates(req.file.buffer);
         const pageCount = textBlocks.pageCount || 1;
-        
+
         // Save to database
         await Session.create(
             sessionId,
@@ -90,7 +90,7 @@ app.post('/api/upload', upload.single('pdf'), async (req, res) => {
             req.file.buffer,
             textBlocks
         );
-        
+
         res.json({
             success: true,
             sessionId,
@@ -110,11 +110,11 @@ app.get('/api/pdf-data/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
         const session = await Session.findBySessionId(sessionId);
-        
+
         if (!session) {
             return res.status(404).json({ error: 'Session not found' });
         }
-        
+
         res.setHeader('Content-Type', 'application/pdf');
         res.send(session.original_pdf);
     } catch (error) {
@@ -128,11 +128,11 @@ app.get('/api/text-blocks/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
         const session = await Session.findBySessionId(sessionId);
-        
+
         if (!session) {
             return res.status(404).json({ error: 'Session not found' });
         }
-        
+
         res.json({
             textBlocks: JSON.parse(session.text_blocks),
             pageCount: session.page_count
@@ -148,15 +148,15 @@ app.post('/api/update-blocks/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
         const { textBlocks, editHistory } = req.body;
-        
+
         const session = await Session.findBySessionId(sessionId);
         if (!session) {
             return res.status(404).json({ error: 'Session not found' });
         }
-        
+
         // Update text blocks in database
         await Session.updateTextBlocks(sessionId, textBlocks);
-        
+
         // Save edit history if provided
         if (editHistory) {
             await Session.addEditHistory(
@@ -170,7 +170,7 @@ app.post('/api/update-blocks/:sessionId', async (req, res) => {
                 editHistory.newColor
             );
         }
-        
+
         res.json({ success: true, message: 'Text blocks updated' });
     } catch (error) {
         console.error('Update blocks error:', error);
@@ -183,21 +183,21 @@ app.post('/api/download-pdf/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
         const { textBlocks } = req.body;
-        
+
         const session = await Session.findBySessionId(sessionId);
         if (!session) {
             return res.status(404).json({ error: 'Session not found' });
         }
-        
+
         // Apply edits to PDF
         const editedPdfBuffer = await PDFProcessor.applyEditsToPDF(
             session.original_pdf,
             textBlocks
         );
-        
+
         // Save edited PDF to database
         await Session.saveEditedPDF(sessionId, editedPdfBuffer);
-        
+
         // Send the edited PDF for download
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename=PDFlow_Edit_Edited.pdf');
@@ -213,20 +213,20 @@ app.post('/api/reset/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
         const session = await Session.findBySessionId(sessionId);
-        
+
         if (!session) {
             return res.status(404).json({ error: 'Session not found' });
         }
-        
+
         // Reset to original text blocks
         const originalBlocks = JSON.parse(session.text_blocks);
         const resetBlocks = originalBlocks.map(block => ({
             ...block,
             text: block.originalText || block.text
         }));
-        
+
         await Session.updateTextBlocks(sessionId, resetBlocks);
-        
+
         res.json({
             success: true,
             textBlocks: resetBlocks,
