@@ -82,3 +82,22 @@ router.post('/update-blocks/:sessionId', async (req, res) => {
         });
     }
 });
+
+// @route   POST /api/edit/reset/:sessionId
+// @desc    Reset to original text blocks
+// @access  Public
+router.post('/reset/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const session = await Session.findBySessionId(sessionId);
+        
+        if (!session) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Session not found' 
+            });
+        }
+        
+        // Get original text blocks
+        const originalBlocks = JSON.parse(session.text_blocks);
+        
