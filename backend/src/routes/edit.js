@@ -51,3 +51,21 @@ router.post('/update-blocks/:sessionId', async (req, res) => {
             });
         }
         
+        // Update text blocks in database
+        await Session.updateTextBlocks(sessionId, textBlocks);
+        
+        // Save edit history if provided
+        if (editHistory) {
+            await Session.addEditHistory(
+                sessionId,
+                editHistory.blockId,
+                editHistory.oldText || '',
+                editHistory.newText || '',
+                editHistory.oldFontSize || 12,
+                editHistory.newFontSize || 12,
+                editHistory.oldColor || '#000000',
+                editHistory.newColor || '#000000'
+            );
+            console.log(`📝 Edit history saved for block: ${editHistory.blockId}`);
+        }
+        
