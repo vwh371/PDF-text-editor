@@ -126,3 +126,25 @@ router.post('/reset/:sessionId', async (req, res) => {
         });
     }
 });
+
+// @route   GET /api/edit/history/:sessionId
+// @desc    Get edit history
+// @access  Public
+router.get('/history/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const history = await Session.getEditHistory(sessionId);
+        
+        res.json({
+            success: true,
+            history
+        });
+        
+    } catch (error) {
+        console.error('Get history error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to get edit history' 
+        });
+    }
+});
