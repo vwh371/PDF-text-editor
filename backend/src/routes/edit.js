@@ -101,3 +101,19 @@ router.post('/reset/:sessionId', async (req, res) => {
         // Get original text blocks
         const originalBlocks = JSON.parse(session.text_blocks);
         
+        // Reset text to original values
+        const resetBlocks = originalBlocks.map(block => ({
+            ...block,
+            text: block.originalText || block.text
+        }));
+        
+        // Update database with reset blocks
+        await Session.updateTextBlocks(sessionId, resetBlocks);
+        
+        console.log(`🔄 Session ${sessionId} reset to original`);
+        
+        res.json({
+            success: true,
+            textBlocks: resetBlocks,
+            message: 'Reset to original text successfully'
+        });
