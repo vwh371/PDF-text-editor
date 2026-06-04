@@ -175,3 +175,20 @@ router.delete('/block/:sessionId/:blockId', async (req, res) => {
         
         console.log(`🗑 Deleted block ${blockId} from session ${sessionId}`);
         
+        res.json({
+            success: true,
+            textBlocks,
+            deletedBlock,
+            message: 'Text block deleted successfully'
+        });
+        
+    } catch (error) {
+        console.error('Delete block error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to delete text block' 
+        });
+    }
+});
+
+module.exports = router;
