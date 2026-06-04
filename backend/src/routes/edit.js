@@ -126,3 +126,44 @@ router.post('/reset/:sessionId', async (req, res) => {
         });
     }
 });
+
+// @route   GET /api/edit/history/:sessionId
+// @desc    Get edit history
+// @access  Public
+router.get('/history/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const history = await Session.getEditHistory(sessionId);
+        
+        res.json({
+            success: true,
+            history
+        });
+        
+    } catch (error) {
+        console.error('Get history error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to get edit history' 
+        });
+    }
+});
+
+// @route   DELETE /api/edit/block/:sessionId/:blockId
+// @desc    Delete a specific text block
+// @access  Public
+router.delete('/block/:sessionId/:blockId', async (req, res) => {
+    try {
+        const { sessionId, blockId } = req.params;
+        const session = await Session.findBySessionId(sessionId);
+        
+        if (!session) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Session not found' 
+            });
+        }
+        
+        let textBlocks = JSON.parse(session.text_blocks);
+        const deletedBlock = textBlocks.find(block => block.id === blockId);
+        
