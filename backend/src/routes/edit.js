@@ -117,3 +117,12 @@ router.post('/reset/:sessionId', async (req, res) => {
             textBlocks: resetBlocks,
             message: 'Reset to original text successfully'
         });
+        
+    } catch (error) {
+        console.error('Reset error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to reset' 
+        });
+    }
+});
