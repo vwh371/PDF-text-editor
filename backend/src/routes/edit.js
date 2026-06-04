@@ -69,3 +69,16 @@ router.post('/update-blocks/:sessionId', async (req, res) => {
             console.log(`📝 Edit history saved for block: ${editHistory.blockId}`);
         }
         
+        res.json({ 
+            success: true, 
+            message: 'Text blocks updated successfully' 
+        });
+        
+    } catch (error) {
+        console.error('Update blocks error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to update text blocks' 
+        });
+    }
+});
