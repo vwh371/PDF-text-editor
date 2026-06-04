@@ -75,3 +75,39 @@ router.post('/', upload.single('pdf'), async (req, res) => {
         });
     }
 });
+
+// @route   GET /api/upload/session/:sessionId
+// @desc    Get session info
+// @access  Public
+router.get('/session/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const session = await Session.findBySessionId(sessionId);
+        
+        if (!session) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Session not found' 
+            });
+        }
+        
+        res.json({
+            success: true,
+            sessionId: session.session_id,
+            fileName: session.file_name,
+            fileSize: session.file_size,
+            pageCount: session.page_count,
+            status: session.status,
+            createdAt: session.created_at
+        });
+        
+    } catch (error) {
+        console.error('Session info error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to get session info' 
+        });
+    }
+});
+
+module.exports = router;
