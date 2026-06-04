@@ -33,3 +33,21 @@ router.get('/text-blocks/:sessionId', async (req, res) => {
         });
     }
 });
+
+// @route   POST /api/edit/update-blocks/:sessionId
+// @desc    Update text blocks
+// @access  Public
+router.post('/update-blocks/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const { textBlocks, editHistory } = req.body;
+        
+        // Validate session exists
+        const session = await Session.findBySessionId(sessionId);
+        if (!session) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Session not found' 
+            });
+        }
+        
