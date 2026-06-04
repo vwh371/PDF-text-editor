@@ -148,3 +148,22 @@ router.get('/history/:sessionId', async (req, res) => {
         });
     }
 });
+
+// @route   DELETE /api/edit/block/:sessionId/:blockId
+// @desc    Delete a specific text block
+// @access  Public
+router.delete('/block/:sessionId/:blockId', async (req, res) => {
+    try {
+        const { sessionId, blockId } = req.params;
+        const session = await Session.findBySessionId(sessionId);
+        
+        if (!session) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Session not found' 
+            });
+        }
+        
+        let textBlocks = JSON.parse(session.text_blocks);
+        const deletedBlock = textBlocks.find(block => block.id === blockId);
+        
