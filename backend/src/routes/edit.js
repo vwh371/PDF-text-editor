@@ -167,3 +167,11 @@ router.delete('/block/:sessionId/:blockId', async (req, res) => {
         let textBlocks = JSON.parse(session.text_blocks);
         const deletedBlock = textBlocks.find(block => block.id === blockId);
         
+        // Remove the block
+        textBlocks = textBlocks.filter(block => block.id !== blockId);
+        
+        // Update database
+        await Session.updateTextBlocks(sessionId, textBlocks);
+        
+        console.log(`🗑 Deleted block ${blockId} from session ${sessionId}`);
+        
