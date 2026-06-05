@@ -103,3 +103,34 @@ router.get('/edited/:sessionId', async (req, res) => {
         });
     }
 });
+
+// @route   DELETE /api/download/session/:sessionId
+// @desc    Delete session and associated files
+// @access  Public
+router.delete('/session/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        
+        // MySQL doesn't have a direct delete method in our Session model
+        // We'll add one
+        const { promisePool } = require('../config/database');
+        const [result] = await promisePool.execute(
+            'DELETE FROM sessions WHERE session_id = ?',
+            [sessionId]
+        );
+        
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Session not found' 
+            });
+        }
+        
+        console.log(`🗑 Session ${sessionId} deleted`);
+        
+        res.json({
+            success: true,
+            message: 'Session deleted successfully'
+        });
+        
+    } 
