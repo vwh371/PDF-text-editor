@@ -95,3 +95,11 @@ router.get('/edited/:sessionId', async (req, res) => {
         res.setHeader('Content-Disposition', 'attachment; filename=PDFlow_Edit_Edited.pdf');
         res.send(pdfBuffer);
         
+    } catch (error) {
+        console.error('Download edited PDF error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to download PDF' 
+        });
+    }
+});
