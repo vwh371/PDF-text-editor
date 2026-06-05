@@ -73,3 +73,25 @@ router.post('/generate/:sessionId', async (req, res) => {
         });
     }
 });
+
+// @route   GET /api/download/edited/:sessionId
+// @desc    Download already edited PDF from database
+// @access  Public
+router.get('/edited/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const result = await Session.getEditedPDF(sessionId);
+        
+        if (!result) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Session not found' 
+            });
+        }
+        
+        const pdfBuffer = result.edited_pdf || result.original_pdf;
+        
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=PDFlow_Edit_Edited.pdf');
+        res.send(pdfBuffer);
+        
