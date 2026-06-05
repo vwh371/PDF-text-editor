@@ -133,4 +133,13 @@ router.delete('/session/:sessionId', async (req, res) => {
             message: 'Session deleted successfully'
         });
         
-    } 
+    } catch (error) {
+        console.error('Delete session error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to delete session' 
+        });
+    }
+});
+
+module.exports = router;
