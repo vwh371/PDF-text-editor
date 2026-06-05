@@ -65,3 +65,11 @@ router.post('/generate/:sessionId', async (req, res) => {
         res.setHeader('Content-Disposition', 'attachment; filename=PDFlow_Edit_Edited.pdf');
         res.send(editedPdfBuffer);
         
+    } catch (error) {
+        console.error('Generate PDF error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to generate PDF: ' + error.message 
+        });
+    }
+});
