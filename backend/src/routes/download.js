@@ -55,3 +55,13 @@ router.post('/generate/:sessionId', async (req, res) => {
             textBlocks
         );
         
+        // Save edited PDF to database
+        await Session.saveEditedPDF(sessionId, editedPdfBuffer);
+        
+        console.log(`✅ Edited PDF generated and saved for session: ${sessionId}`);
+        
+        // Send the edited PDF for download
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=PDFlow_Edit_Edited.pdf');
+        res.send(editedPdfBuffer);
+        
