@@ -30,3 +30,28 @@ router.get('/pdf-data/:sessionId', async (req, res) => {
         });
     }
 });
+
+// @route   POST /api/download/generate/:sessionId
+// @desc    Generate and download edited PDF
+// @access  Public
+router.post('/generate/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const { textBlocks } = req.body;
+        
+        console.log(`🔧 Generating edited PDF for session: ${sessionId}`);
+        
+        const session = await Session.findBySessionId(sessionId);
+        if (!session) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Session not found' 
+            });
+        }
+        
+        // Apply edits to PDF
+        const editedPdfBuffer = await PDFProcessor.applyEditsToPDF(
+            session.original_pdf,
+            textBlocks
+        );
+        
