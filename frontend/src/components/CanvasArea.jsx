@@ -62,3 +62,41 @@ const CanvasArea = ({
       console.error('Render error:', error);
     }
   };
+
+  /**
+   * Draws interactive text overlays on top of rendered PDF
+   * Shows bounding boxes and makes text blocks clickable
+   * 
+   * @param {Object} viewport - PDF.js viewport object with scale factor
+   */
+  const drawTextOverlays = (viewport) => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const scale = viewport.scale;
+    // Filter text blocks for current page only
+    const pageBlocks = textBlocks.filter(block => block.page === currentPage);
+    
+    pageBlocks.forEach(block => {
+      ctx.save();
+      // Different styling for selected vs unselected blocks
+      ctx.strokeStyle = selectedBlock?.id === block.id ? '#ef4444' : '#3b82f6';
+      ctx.fillStyle = selectedBlock?.id === block.id ? 'rgba(239, 68, 68, 0.15)' : 'rgba(59, 130, 246, 0.1)';
+      ctx.lineWidth = selectedBlock?.id === block.id ? 3 : 2;
+      
+      // Calculate scaled coordinates
+      const x = block.x * scale;
+      const y = (block.y - block.fontSize) * scale;
+      const width = block.width * scale;
+      const height = block.height * scale;
+      
+      // Draw bounding box and fill
+      ctx.strokeRect(x, y, width, height);
+      ctx.fillRect(x, y, width, height);
+      
+      // Draw the actual text
+      ctx.font = `${block.fontSize * scale}px 'Inter', Arial`;
+      ctx.fillStyle = block.color;
+      ctx.fillText(block.text, block.x * scale, block.y * scale);
+      ctx.restore();
+    });
+  };
