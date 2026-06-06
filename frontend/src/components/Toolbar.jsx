@@ -86,3 +86,28 @@ const Toolbar = ({
             <ZoomIn className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Page Navigation Section */}
+        <div className="flex items-center gap-3">
+          {/* Previous Page Button */}
+          <button
+            onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+            disabled={currentPage === 0 || !sessionId}
+            className="p-2 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          {/* Page Number Display */}
+          <div className="bg-white px-4 py-1 rounded-lg border border-gray-300">
+            <span className="font-medium">{currentPage + 1}</span>
+            <span className="text-gray-500"> / {pageCount}</span>
+          </div>
+          {/* Next Page Button */}
+          <button
+            onClick={() => setCurrentPage(Math.min(pageCount - 1, currentPage + 1))}
+            disabled={currentPage === pageCount - 1 || !sessionId}
+            className="p-2 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
