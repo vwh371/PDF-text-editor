@@ -35,3 +35,29 @@ const TextBlockList = ({ blocks, selectedBlock, onSelectBlock }) => {
             }
           `}
         >
+          {/* Block text preview - truncate if too long */}
+          <div className="text-sm font-medium text-gray-800 mb-1 line-clamp-2">
+            {block.text.length > 60 ? block.text.substring(0, 60) + '...' : block.text}
+          </div>
+          {/* Block metadata - font size and color */}
+          <div className="flex items-center gap-3 text-xs text-gray-500">
+            <span className="flex items-center gap-1">
+              <Hash className="w-3 h-3" />
+              {block.fontSize}px
+            </span>
+            <span className="flex items-center gap-1">
+              {/* Color preview circle */}
+              <div 
+                className="w-3 h-3 rounded-full" 
+                style={{ backgroundColor: block.color }}
+              ></div>
+              {block.color}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default TextBlockList;
