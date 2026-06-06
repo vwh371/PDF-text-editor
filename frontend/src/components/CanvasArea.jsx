@@ -100,3 +100,61 @@ const CanvasArea = ({
       ctx.restore();
     });
   };
+
+  /**
+   * Handles click events on canvas
+   * Calculates click position and finds which text block was clicked
+   * 
+   * @param {MouseEvent} e - Click event
+   */
+  const handleCanvasClick = (e) => {
+    if (!canvasRef.current) return;
+    
+    // Calculate click coordinates relative to canvas
+    const rect = canvasRef.current.getBoundingClientRect();
+    const scaleX = canvasRef.current.width / rect.width;
+    const scaleY = canvasRef.current.height / rect.height;
+    
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+    
+    // Pass click to parent component
+    onCanvasClick(mouseX, mouseY, zoom);
+  };
+
+  // Show placeholder when no PDF is loaded
+  if (!pdfData && !loading) {
+    return (
+      <div className="flex-1 bg-gray-800 flex items-center justify-center min-h-[600px]">
+        <div className="text-center text-white">
+          <FileText className="w-20 h-20 mx-auto mb-4 opacity-50" />
+          <h3 className="text-xl font-semibold mb-2">No PDF Loaded</h3>
+          <p className="text-gray-300">Click "Upload PDF" to get started</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex-1 bg-gray-800 flex items-center justify-center p-6 min-h-[600px] relative">
+      {/* Canvas element for PDF rendering */}
+      <canvas
+        ref={canvasRef}
+        onClick={handleCanvasClick}
+        className="cursor-pointer rounded-lg shadow-2xl max-w-full h-auto"
+        style={{ backgroundColor: 'white' }}
+      />
+      {/* Loading overlay */}
+      {loading && (
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-4 flex items-center gap-3">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+            <span>Processing...</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CanvasArea;
