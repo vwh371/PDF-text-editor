@@ -62,3 +62,27 @@ const Toolbar = ({
             </div>
           )}
         </div>
+
+        {/* Zoom Controls Section */}
+        <div className="flex items-center gap-2 bg-white rounded-lg border border-gray-300 p-1">
+          {/* Zoom Out Button */}
+          <button
+            onClick={handleZoomOut}
+            disabled={zoom <= 0.8}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+          >
+            <ZoomOut className="w-4 h-4" />
+          </button>
+          {/* Zoom Percentage Display */}
+          <span className="w-16 text-center font-medium text-sm">
+            {Math.round(zoom * 100)}%
+          </span>
+          {/* Zoom In Button */}
+          <button
+            onClick={handleZoomIn}
+            disabled={zoom >= 3}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+          >
+            <ZoomIn className="w-4 h-4" />
+          </button>
+        </div>
