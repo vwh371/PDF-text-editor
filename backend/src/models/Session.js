@@ -22,14 +22,14 @@ class Session {
 
     // Update text blocks
     static async updateTextBlocks(sessionId, textBlocks) {
-        const query = 'UPDATE sessions SET text_blocks = ?, status = 'editing', updated_at = NOW() WHERE session_id = ?';
+        const query = 'UPDATE sessions SET text_blocks = ?, status = "editing", updated_at = NOW() WHERE session_id = ?';
         const [result] = await promisePool.execute(query, [JSON.stringify(textBlocks), sessionId]);
         return result.affectedRows;
     }
 
     // Save edited PDF
     static async saveEditedPDF(sessionId, pdfBuffer) {
-        const query = 'UPDATE sessions SET edited_pdf = ?, status = 'saved', updated_at = NOW() WHERE session_id = ?';
+        const query = 'UPDATE sessions SET edited_pdf = ?, status = "saved", updated_at = NOW() WHERE session_id = ?';
         const [result] = await promisePool.execute(query, [pdfBuffer, sessionId]);
         return result.affectedRows;
     }
@@ -62,7 +62,7 @@ class Session {
 
     // Delete old sessions (older than 24 hours)
     static async deleteOldSessions() {
-        const query = 'DELETE FROM sessions WHERE created_at < DATE_SUB(NOW(), INTERVAL 24 HOUR) AND status = 'saved'';
+        const query = 'DELETE FROM sessions WHERE created_at < DATE_SUB(NOW(), INTERVAL 24 HOUR) AND status = "saved"';
         const [result] = await promisePool.execute(query);
         return result.affectedRows;
     }
