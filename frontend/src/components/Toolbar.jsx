@@ -111,3 +111,32 @@ const Toolbar = ({
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
+
+        {/* Action Buttons Section */}
+        <div className="flex items-center gap-3">
+          {/* Reset Button */}
+          <button
+            onClick={onReset}
+            disabled={!sessionId || loading}
+            className="btn btn-warning flex items-center gap-2"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Reset
+          </button>
+          {/* Save PDF Button */}
+          <button
+            onClick={onSave}
+            disabled={!sessionId || loading}
+            className="btn btn-success flex items-center gap-2"
+          >
+            {/* Show spinner while saving */}
+            {loading ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            Save PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Toolbar;
