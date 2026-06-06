@@ -6,7 +6,7 @@ dotenv.config();
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'pdflow_user',
-    password: process.env.DB_PASSWORD || 'Pdflow@2024Secure!',
+    password: process.env.DB_PASSWORD || 'sadik@371',
     database: process.env.DB_NAME || 'pdflow_edit',
     waitForConnections: true,
     connectionLimit: 10,
