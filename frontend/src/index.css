@@ -4,142 +4,113 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @theme {
-  --color-primary-50: #eff6ff;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-secondary-500: #8b5cf6;
-  --color-secondary-600: #7c3aed;
-  --color-dark-700: #1e293b;
-  --color-dark-800: #0f172a;
-  
-  --animate-spin-slow: spin 2s linear infinite;
+  /* Red & white primary palette */
+  --color-brand-50:  #fff1f1;
+  --color-brand-100: #ffe1e1;
+  --color-brand-200: #ffc7c7;
+  --color-brand-400: #f87171;
+  --color-brand-500: #ef4444;
+  --color-brand-600: #dc2626;
+  --color-brand-700: #b91c1c;
+  --color-brand-800: #991b1b;
+  --color-brand-900: #7f1d1d;
+
+  --color-surface-900:  #0f0b0b;
+  --color-surface-800:  #1c1010;
+  --color-surface-700:  #2a1515;
+  --color-surface-600:  #3b1a1a;
+
+  --animate-spin-slow:  spin 2s linear infinite;
   --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  
+
   --font-inter: 'Inter', system-ui, sans-serif;
 }
 
-/* Basic reset and global styles */
-* {
+/* ─── Full-viewport reset ─────────────────────────────── */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
+  height: 100%;
+  width: 100%;
   font-family: 'Inter', sans-serif;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  color: #f3f4f6;
-  background-color: #0b0f19;
+  background-color: #0f0b0b;
+  color: #f9f9f9;
   overflow-x: hidden;
 }
 
-/* Button base styling */
+#root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Button base ─────────────────────────────────────── */
 .btn {
   padding: 10px 16px;
   border-radius: 8px;
   font-weight: 600;
   transition: all 200ms ease;
-  transform: translateZ(0);
   border: none;
   cursor: pointer;
   outline: none;
 }
 
-.btn:hover {
-  transform: scale(1.05);
-}
+.btn:hover  { transform: scale(1.04); }
+.btn:disabled        { opacity: 0.45; cursor: not-allowed; }
+.btn:disabled:hover  { transform: scale(1); }
 
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+/* Primary – red gradient */
+.btn-primary { background: linear-gradient(to right, #ef4444, #b91c1c); color: white; }
+.btn-primary:hover { background: linear-gradient(to right, #dc2626, #991b1b); }
 
-.btn:disabled:hover {
-  transform: scale(1);
-}
+/* Success – keeps green for semantic clarity */
+.btn-success { background: linear-gradient(to right, #22c55e, #16a34a); color: white; }
+.btn-success:hover { background: linear-gradient(to right, #16a34a, #15803d); }
 
-/* Primary button - blue gradient */
-.btn-primary {
-  background: linear-gradient(to right, #3b82f6, #2563eb);
-  color: white;
-}
+/* Danger */
+.btn-danger { background: linear-gradient(to right, #ef4444, #dc2626); color: white; }
+.btn-danger:hover { background: linear-gradient(to right, #dc2626, #b91c1c); }
 
-.btn-primary:hover {
-  background: linear-gradient(to right, #2563eb, #1d4ed8);
-}
+/* Warning */
+.btn-warning { background: linear-gradient(to right, #eab308, #ca8a04); color: #111; }
+.btn-warning:hover { background: linear-gradient(to right, #ca8a04, #a16207); }
 
-/* Success button - green gradient */
-.btn-success {
-  background: linear-gradient(to right, #22c55e, #16a34a);
-  color: white;
-}
-
-.btn-success:hover {
-  background: linear-gradient(to right, #16a34a, #15803d);
-}
-
-/* Danger button - red gradient */
-.btn-danger {
-  background: linear-gradient(to right, #ef4444, #dc2626);
-  color: white;
-}
-
-.btn-danger:hover {
-  background: linear-gradient(to right, #dc2626, #b91c1c);
-}
-
-/* Warning button - yellow gradient */
-.btn-warning {
-  background: linear-gradient(to right, #eab308, #ca8a04);
-  color: #111;
-}
-
-.btn-warning:hover {
-  background: linear-gradient(to right, #ca8a04, #a16207);
-}
-
-/* Card component */
+/* ─── Card ────────────────────────────────────────────── */
 .card {
-  background: white;
+  background: #1c1010;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(239,68,68,0.08);
   overflow: hidden;
 }
 
-/* Input field styling */
+/* ─── Input field ─────────────────────────────────────── */
 .input-field {
   width: 100%;
   padding: 10px 16px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #3b1a1a;
   border-radius: 8px;
   outline: none;
+  background: #1c1010;
+  color: #f9f9f9;
   transition: all 200ms ease;
 }
-
 .input-field:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
 }
 
-/* Custom scrollbar styling */
-.scrollbar-custom::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.scrollbar-custom::-webkit-scrollbar-track {
-  background: #f3f4f6;
-  border-radius: 10px;
-}
-
-.scrollbar-custom::-webkit-scrollbar-thumb {
-  background: #9ca3af;
-  border-radius: 10px;
-}
-
-.scrollbar-custom::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
-}
+/* ─── Custom scrollbar ────────────────────────────────── */
+.scrollbar-custom::-webkit-scrollbar        { width: 6px; height: 6px; }
+.scrollbar-custom::-webkit-scrollbar-track  { background: #1c1010; border-radius: 10px; }
+.scrollbar-custom::-webkit-scrollbar-thumb  { background: #7f1d1d; border-radius: 10px; }
+.scrollbar-custom::-webkit-scrollbar-thumb:hover { background: #ef4444; }
