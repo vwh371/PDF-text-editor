@@ -1,23 +1,5 @@
-@import "tailwindcss";
-
 /* Import Google Font - Inter */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-@theme {
-  --color-primary-50: #eff6ff;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-secondary-500: #8b5cf6;
-  --color-secondary-600: #7c3aed;
-  --color-dark-700: #1e293b;
-  --color-dark-800: #0f172a;
-  
-  --animate-spin-slow: spin 2s linear infinite;
-  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  
-  --font-inter: 'Inter', system-ui, sans-serif;
-}
 
 /* Basic reset and global styles */
 * {
@@ -28,12 +10,10 @@
 
 body {
   font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom right, #a855f7, #7c3aed, #4f46e5);
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  color: #f3f4f6;
-  background-color: #0b0f19;
-  overflow-x: hidden;
+  padding: 20px;
+  color: #333;
 }
 
 /* Button base styling */
