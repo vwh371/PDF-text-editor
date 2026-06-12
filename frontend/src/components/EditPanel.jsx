@@ -21,21 +21,21 @@ const EditPanel = ({ selectedBlock, onApplyEdit, onDeleteBlock }) => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-bold text-white/80 flex items-center gap-2">
-        <Edit2 className="w-4 h-4 text-red-400" />
+      <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+        <Edit2 className="w-4 h-4 text-green-600" />
         Edit Text Block
       </h3>
 
       {/* Text */}
       <div>
-        <label className="block text-xs font-medium text-white/50 mb-1.5 flex items-center gap-1.5">
+        <label className="block text-xs font-medium text-slate-500 mb-1.5 flex items-center gap-1.5">
           <Type className="w-3.5 h-3.5" /> Text Content
         </label>
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={3}
-          className="input-field resize-none text-sm"
+          className="input-field resize-none text-sm font-inter"
           placeholder="Enter your text…"
         />
       </div>
@@ -43,7 +43,7 @@ const EditPanel = ({ selectedBlock, onApplyEdit, onDeleteBlock }) => {
       {/* Font size + color */}
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-medium text-white/50 mb-1.5 flex items-center gap-1.5">
+          <label className="block text-xs font-medium text-slate-500 mb-1.5 flex items-center gap-1.5">
             <Maximize2 className="w-3.5 h-3.5" /> Size (px)
           </label>
           <input
@@ -56,7 +56,7 @@ const EditPanel = ({ selectedBlock, onApplyEdit, onDeleteBlock }) => {
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-white/50 mb-1.5 flex items-center gap-1.5">
+          <label className="block text-xs font-medium text-slate-500 mb-1.5 flex items-center gap-1.5">
             <Palette className="w-3.5 h-3.5" /> Color
           </label>
           <div className="flex gap-2">
@@ -64,7 +64,7 @@ const EditPanel = ({ selectedBlock, onApplyEdit, onDeleteBlock }) => {
               type="color"
               value={color}
               onChange={(e) => setColor(e.target.value)}
-              className="w-10 h-10 rounded border border-red-950/60 cursor-pointer bg-transparent"
+              className="w-10 h-10 rounded border border-slate-200 cursor-pointer bg-transparent"
             />
             <input
               type="text"

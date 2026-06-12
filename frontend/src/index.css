@@ -4,30 +4,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @theme {
-  /* Red & white primary palette */
-  --color-brand-50:  #fff1f1;
-  --color-brand-100: #ffe1e1;
-  --color-brand-200: #ffc7c7;
-  --color-brand-400: #f87171;
-  --color-brand-500: #ef4444;
-  --color-brand-600: #dc2626;
-  --color-brand-700: #b91c1c;
-  --color-brand-800: #991b1b;
-  --color-brand-900: #7f1d1d;
+  /* Green & white primary palette */
+  --color-brand-50: #f0fdf4;
+  --color-brand-100: #dcfce7;
+  --color-brand-200: #bbf7d0;
+  --color-brand-400: #4ade80;
+  --color-brand-500: #22c55e;
+  --color-brand-600: #16a34a;
+  --color-brand-700: #15803d;
+  --color-brand-800: #166534;
+  --color-brand-900: #14532d;
 
-  --color-surface-900:  #0f0b0b;
-  --color-surface-800:  #1c1010;
-  --color-surface-700:  #2a1515;
-  --color-surface-600:  #3b1a1a;
+  --color-surface-900: #ffffff;
+  --color-surface-800: #f8fafc;
+  --color-surface-700: #f1f5f9;
+  --color-surface-600: #e2e8f0;
 
-  --animate-spin-slow:  spin 2s linear infinite;
+  --animate-spin-slow: spin 2s linear infinite;
   --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
   --font-inter: 'Inter', system-ui, sans-serif;
 }
 
 /* ─── Full-viewport reset ─────────────────────────────── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -42,8 +44,8 @@ body {
   height: 100%;
   width: 100%;
   font-family: 'Inter', sans-serif;
-  background-color: #0f0b0b;
-  color: #f9f9f9;
+  background-color: #ffffff;
+  color: #0f172a;
   overflow-x: hidden;
 }
 
@@ -65,31 +67,66 @@ body {
   outline: none;
 }
 
-.btn:hover  { transform: scale(1.04); }
-.btn:disabled        { opacity: 0.45; cursor: not-allowed; }
-.btn:disabled:hover  { transform: scale(1); }
+.btn:hover {
+  transform: scale(1.04);
+}
 
-/* Primary – red gradient */
-.btn-primary { background: linear-gradient(to right, #ef4444, #b91c1c); color: white; }
-.btn-primary:hover { background: linear-gradient(to right, #dc2626, #991b1b); }
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 
-/* Success – keeps green for semantic clarity */
-.btn-success { background: linear-gradient(to right, #22c55e, #16a34a); color: white; }
-.btn-success:hover { background: linear-gradient(to right, #16a34a, #15803d); }
+.btn:disabled:hover {
+  transform: scale(1);
+}
+
+/* Primary – green gradient */
+.btn-primary {
+  background: linear-gradient(to right, #22c55e, #16a34a);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, #16a34a, #15803d);
+}
+
+/* Success – keeps green */
+.btn-success {
+  background: linear-gradient(to right, #22c55e, #16a34a);
+  color: white;
+}
+
+.btn-success:hover {
+  background: linear-gradient(to right, #16a34a, #15803d);
+}
 
 /* Danger */
-.btn-danger { background: linear-gradient(to right, #ef4444, #dc2626); color: white; }
-.btn-danger:hover { background: linear-gradient(to right, #dc2626, #b91c1c); }
+.btn-danger {
+  background: linear-gradient(to right, #ef4444, #dc2626);
+  color: white;
+}
 
-/* Warning */
-.btn-warning { background: linear-gradient(to right, #eab308, #ca8a04); color: #111; }
-.btn-warning:hover { background: linear-gradient(to right, #ca8a04, #a16207); }
+.btn-danger:hover {
+  background: linear-gradient(to right, #dc2626, #b91c1c);
+}
+
+/* Warning - subtle grey/amber */
+.btn-warning {
+  background: linear-gradient(to right, #f1f5f9, #e2e8f0);
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.btn-warning:hover {
+  background: linear-gradient(to right, #e2e8f0, #cbd5e1);
+}
 
 /* ─── Card ────────────────────────────────────────────── */
 .card {
-  background: #1c1010;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(239,68,68,0.08);
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.05);
+  border: 1px solid #e2e8f0;
   overflow: hidden;
 }
 
@@ -97,20 +134,91 @@ body {
 .input-field {
   width: 100%;
   padding: 10px 16px;
-  border: 1px solid #3b1a1a;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
   outline: none;
-  background: #1c1010;
-  color: #f9f9f9;
+  background: #ffffff;
+  color: #0f172a;
   transition: all 200ms ease;
 }
+
 .input-field:focus {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
 }
 
 /* ─── Custom scrollbar ────────────────────────────────── */
-.scrollbar-custom::-webkit-scrollbar        { width: 6px; height: 6px; }
-.scrollbar-custom::-webkit-scrollbar-track  { background: #1c1010; border-radius: 10px; }
-.scrollbar-custom::-webkit-scrollbar-thumb  { background: #7f1d1d; border-radius: 10px; }
-.scrollbar-custom::-webkit-scrollbar-thumb:hover { background: #ef4444; }
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Custom premium styles for the landing page */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(34, 197, 94, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 197, 94, 0.05) 1px, transparent 1px);
+}
+
+.bg-grid-mask {
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+}
+
+@keyframes float-medium {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-40px, 40px) scale(1.15);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 20s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 15s ease-in-out infinite;
+}
+
+/* Custom transitions and states */
+.faq-transition {
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+.glow-hover {
+  transition: all 0.3s ease;
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.4);
+}

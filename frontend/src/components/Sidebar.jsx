@@ -18,13 +18,13 @@ const Sidebar = ({
   const currentPageBlocks = textBlocks.filter((b) => b.page === currentPage);
 
   return (
-    <div className="w-full lg:w-96 bg-[#1c1010] border-l border-red-950/60 flex flex-col max-h-full overflow-y-auto scrollbar-custom shrink-0">
+    <div className="w-full lg:w-96 bg-white border-l border-slate-200 flex flex-col max-h-full overflow-y-auto scrollbar-custom shrink-0 text-slate-800">
 
       {/* Text Blocks list */}
-      <div className="p-5 border-b border-red-950/50">
-        <h3 className="text-sm font-bold text-white/80 mb-4 flex items-center justify-between">
+      <div className="p-5 border-b border-slate-100">
+        <h3 className="text-sm font-bold text-slate-700 mb-4 flex items-center justify-between">
           <span>📋 Text Blocks</span>
-          <span className="text-xs bg-red-600/20 text-red-400 border border-red-600/30 px-2 py-0.5 rounded-full">
+          <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-bold">
             {currentPageBlocks.length}
           </span>
         </h3>
@@ -37,7 +37,7 @@ const Sidebar = ({
 
       {/* Edit Panel */}
       {selectedBlock && (
-        <div className="p-5 border-b border-red-950/50">
+        <div className="p-5 border-b border-slate-100">
           <EditPanel
             selectedBlock={selectedBlock}
             onApplyEdit={onApplyEdit}
@@ -48,14 +48,14 @@ const Sidebar = ({
 
       {/* Tips */}
       {showTips && (
-        <div className="m-4 p-4 bg-red-900/10 border border-red-900/30 rounded-xl">
+        <div className="m-4 p-4 bg-green-50/50 border border-green-100 rounded-xl">
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-3">
-                <Lightbulb className="w-4 h-4 text-yellow-400" />
-                <h4 className="text-xs font-bold text-white/70">Quick Tips</h4>
+                <Lightbulb className="w-4 h-4 text-amber-500" />
+                <h4 className="text-xs font-bold text-slate-700">Quick Tips</h4>
               </div>
-              <ul className="space-y-1.5 text-xs text-white/50">
+              <ul className="space-y-1.5 text-xs text-slate-500">
                 {[
                   'Click text on the PDF canvas to select it',
                   'Edit font size & color in this panel',
@@ -63,7 +63,7 @@ const Sidebar = ({
                   'Save directly as a PDF when done',
                 ].map((tip) => (
                   <li key={tip} className="flex items-start gap-2">
-                    <span className="text-red-500 mt-0.5">•</span>
+                    <span className="text-green-500 mt-0.5">•</span>
                     {tip}
                   </li>
                 ))}
@@ -71,7 +71,7 @@ const Sidebar = ({
             </div>
             <button
               onClick={() => setShowTips(false)}
-              className="text-white/30 hover:text-white/60 text-xs ml-2"
+              className="text-slate-400 hover:text-slate-600 text-xs ml-2"
             >
               ✕
             </button>

@@ -7,8 +7,8 @@ import { Type, Hash } from 'lucide-react';
 const TextBlockList = ({ blocks, selectedBlock, onSelectBlock }) => {
   if (blocks.length === 0) {
     return (
-      <div className="text-center py-8 text-white/30">
-        <Type className="w-10 h-10 mx-auto mb-2 opacity-40" />
+      <div className="text-center py-8 text-slate-400">
+        <Type className="w-10 h-10 mx-auto mb-2 opacity-45 text-slate-300" />
         <p className="text-xs">No text blocks on this page</p>
       </div>
     );
@@ -22,19 +22,19 @@ const TextBlockList = ({ blocks, selectedBlock, onSelectBlock }) => {
           onClick={() => onSelectBlock(block)}
           className={`p-3 rounded-lg cursor-pointer transition-all duration-200 ${
             selectedBlock?.id === block.id
-              ? 'bg-red-900/30 border-l-4 border-red-500 shadow-md'
-              : 'bg-[#0f0b0b] border border-red-950/40 hover:border-red-800/60 hover:bg-red-950/20'
+              ? 'bg-green-50 border-l-4 border-green-500 shadow-sm'
+              : 'bg-slate-50 border border-slate-250/60 hover:border-green-400 hover:bg-green-50/10'
           }`}
         >
-          <div className="text-xs font-medium text-white/80 mb-1 line-clamp-2">
+          <div className="text-xs font-semibold text-slate-700 mb-1 line-clamp-2">
             {block.text.length > 60 ? block.text.substring(0, 60) + '…' : block.text}
           </div>
-          <div className="flex items-center gap-3 text-[11px] text-white/40">
+          <div className="flex items-center gap-3 text-[11px] text-slate-400">
             <span className="flex items-center gap-1">
-              <Hash className="w-3 h-3" /> {block.fontSize}px
+              <Hash className="w-3 h-3 text-slate-400" /> {block.fontSize}px
             </span>
             <span className="flex items-center gap-1">
-              <div className="w-3 h-3 rounded-full border border-white/20" style={{ backgroundColor: block.color }} />
+              <div className="w-3 h-3 rounded-full border border-slate-200" style={{ backgroundColor: block.color }} />
               {block.color}
             </span>
           </div>

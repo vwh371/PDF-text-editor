@@ -48,8 +48,8 @@ const CanvasArea = ({
     pageBlocks.forEach((block) => {
       ctx.save();
       const isSelected = selectedBlock?.id === block.id;
-      ctx.strokeStyle = isSelected ? '#ef4444' : '#dc2626';
-      ctx.fillStyle   = isSelected ? 'rgba(239,68,68,0.15)' : 'rgba(220,38,38,0.07)';
+      ctx.strokeStyle = isSelected ? '#22c55e' : '#16a34a';
+      ctx.fillStyle   = isSelected ? 'rgba(34,197,94,0.15)' : 'rgba(22,163,74,0.07)';
       ctx.lineWidth   = isSelected ? 3 : 1.5;
 
       const x = block.x * scale;
@@ -75,14 +75,28 @@ const CanvasArea = ({
     onCanvasClick((e.clientX - rect.left) * scaleX, (e.clientY - rect.top) * scaleY, zoom);
   };
 
+  if (!pdfData && loading) {
+    return (
+      <div className="flex-1 w-full h-full flex items-center justify-center min-h-[500px]">
+        <div className="text-center text-slate-500">
+          <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-green-50 border border-green-200 mx-auto mb-5">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600" />
+          </div>
+          <h3 className="text-lg font-bold text-slate-800 mb-2">Analyzing & Rendering PDF...</h3>
+          <p className="text-sm text-slate-400">Our engine is parsing text blocks and calculating layout geometry.</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!pdfData && !loading) {
     return (
       <div className="flex-1 w-full h-full flex items-center justify-center min-h-[500px]">
-        <div className="text-center text-white/30">
-          <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-red-900/10 border border-red-900/20 mx-auto mb-5">
-            <FileText className="w-10 h-10 text-red-700/60" />
+        <div className="text-center text-slate-400">
+          <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-slate-100 border border-slate-250 mx-auto mb-5">
+            <FileText className="w-10 h-10 text-slate-400" />
           </div>
-          <h3 className="text-lg font-bold text-white/50 mb-2">No PDF Loaded</h3>
+          <h3 className="text-lg font-bold text-slate-700 mb-2">No PDF Loaded</h3>
           <p className="text-sm">Click "Upload PDF" in the toolbar to begin</p>
         </div>
       </div>
@@ -94,14 +108,14 @@ const CanvasArea = ({
       <canvas
         ref={canvasRef}
         onClick={handleCanvasClick}
-        className="cursor-pointer rounded-lg shadow-2xl shadow-black/60 max-w-full h-auto"
+        className="cursor-pointer rounded-lg shadow-2xl shadow-black/20 max-w-full h-auto"
         style={{ backgroundColor: 'white' }}
       />
       {loading && (
-        <div className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-lg">
-          <div className="bg-[#1c1010] border border-red-900/50 rounded-xl p-4 flex items-center gap-3">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-red-500" />
-            <span className="text-sm text-white/70">Processing…</span>
+        <div className="absolute inset-0 bg-white/60 flex items-center justify-center rounded-lg">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 flex items-center gap-3 shadow-lg">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-green-600" />
+            <span className="text-sm text-slate-700 font-medium font-inter">Processing…</span>
           </div>
         </div>
       )}
