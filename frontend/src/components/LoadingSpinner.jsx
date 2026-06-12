@@ -14,9 +14,9 @@ const LoadingSpinner = () => {
         {/* Animated spinner container */}
         <div className="relative">
           {/* Outer spinning ring */}
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600"></div>
           {/* Inner pulsing icon */}
-          <Loader className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-blue-500 animate-pulse" />
+          <Loader className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-green-600 animate-pulse" />
         </div>
         {/* Loading message */}
         <p className="text-gray-700 font-medium">Processing your PDF...</p>

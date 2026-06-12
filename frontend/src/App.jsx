@@ -29,41 +29,57 @@ function App() {
     setSelectedBlock,
   } = usePdfEditor();
 
+  const handleLandingFileUpload = async (event) => {
+    setShowEditor(true);
+    await handleFileUpload(event);
+  };
+
   return (
     <>
       {!showEditor ? (
-        <LandingPage onGetStarted={() => setShowEditor(true)} />
+        <LandingPage 
+          onGetStarted={() => setShowEditor(true)} 
+          onFileUpload={handleLandingFileUpload}
+          loading={loading}
+        />
       ) : (
-        <div className="flex flex-col h-screen bg-slate-950 text-slate-100 font-inter select-none">
-          {/* Header */}
-          <header className="flex items-center justify-between px-6 py-4 bg-slate-900 border-b border-slate-800 shadow-sm shrink-0">
+        /* ── Editor Workspace: full-screen, no gaps ─────── */
+        <div
+          style={{ height: '100vh', width: '100vw' }}
+          className="flex flex-col bg-slate-50 text-slate-800 overflow-hidden font-inter"
+        >
+          {/* ── Header ────────────────────────────────────── */}
+          <header className="flex items-center justify-between px-6 py-3 bg-white border-b border-slate-200 shrink-0">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-600/10 border border-blue-500/20">
-                <FileText className="w-5 h-5 text-blue-400" />
+              <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-green-50 border border-green-200 shadow-sm">
+                <FileText className="w-4.5 h-4.5 text-green-600" />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-white tracking-wide">PDFlow Workspace</h1>
+                <h1 className="text-base font-black text-slate-800 tracking-wide">PDFlow Workspace</h1>
                 {fileName ? (
-                  <p className="text-xs text-slate-400 flex items-center gap-1.5 mt-0.5">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-400 animate-pulse" />
-                    Editing: <span className="text-slate-300 font-semibold max-w-[200px] truncate">{fileName}</span>
+                  <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5 font-medium">
+                    <Sparkles className="w-3 h-3 text-green-500 animate-pulse" />
+                    Editing:{' '}
+                    <span className="text-slate-700 font-bold max-w-[200px] truncate">
+                      {fileName}
+                    </span>
                   </p>
                 ) : (
-                  <p className="text-xs text-slate-500 mt-0.5">Please upload a document to begin editing</p>
+                  <p className="text-xs text-slate-400 mt-0.5">Upload a PDF file to start editing</p>
                 )}
               </div>
             </div>
-            
+
             <button
               onClick={() => setShowEditor(false)}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-lg transition-all duration-200 border border-slate-700"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-slate-600 hover:text-slate-800 bg-slate-100/70 hover:bg-slate-200/80 rounded-lg transition-all duration-200 border border-slate-200 cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Home
             </button>
           </header>
 
-          {/* Editor Toolbar */}
+          {/* ── Toolbar ───────────────────────────────────── */}
           <Toolbar
             onFileUpload={handleFileUpload}
             fileName={fileName}
@@ -78,10 +94,10 @@ function App() {
             sessionId={sessionId}
           />
 
-          {/* Main workspace */}
-          <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
-            {/* PDF Canvas Center */}
-            <div className="flex-1 overflow-auto bg-slate-900 flex justify-center items-start p-8 scrollbar-custom">
+          {/* ── Main workspace ────────────────────────────── */}
+          <div className="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
+            {/* PDF canvas */}
+            <div className="flex-1 overflow-auto bg-slate-100 flex justify-center items-start p-8 scrollbar-custom min-h-0">
               <CanvasArea
                 pdfData={pdfData}
                 currentPage={currentPage}
@@ -93,7 +109,7 @@ function App() {
               />
             </div>
 
-            {/* Editing Sidebar Panel */}
+            {/* Sidebar – only once a file is loaded */}
             {sessionId && (
               <Sidebar
                 textBlocks={textBlocks}

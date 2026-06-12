@@ -1,46 +1,33 @@
 import React, { useState } from 'react';
 import EditPanel from './EditPanel';
 import TextBlockList from './TextBlockList';
-import { Lightbulb, ChevronDown, ChevronUp } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
 
 /**
- * Sidebar Component
- * Displays list of text blocks and edit panel for selected block
- * 
- * @param {Array} textBlocks - All text blocks from PDF
- * @param {number} currentPage - Current page number
- * @param {Object} selectedBlock - Currently selected text block
- * @param {Function} onSelectBlock - Handler for selecting a block
- * @param {Function} onApplyEdit - Handler for applying edits
- * @param {Function} onDeleteBlock - Handler for deleting a block
+ * Sidebar Component – red/white dark theme
  */
-const Sidebar = ({ 
-  textBlocks, 
-  currentPage, 
-  selectedBlock, 
-  onSelectBlock, 
-  onApplyEdit, 
-  onDeleteBlock 
+const Sidebar = ({
+  textBlocks,
+  currentPage,
+  selectedBlock,
+  onSelectBlock,
+  onApplyEdit,
+  onDeleteBlock,
 }) => {
-  // State for showing/hiding tips section
   const [showTips, setShowTips] = useState(true);
-  
-  // Filter blocks for current page only
-  const currentPageBlocks = textBlocks.filter(block => block.page === currentPage);
+  const currentPageBlocks = textBlocks.filter((b) => b.page === currentPage);
 
   return (
-    <div className="w-full lg:w-96 bg-gray-50 border-l border-gray-200 flex flex-col max-h-[80vh] overflow-y-auto scrollbar-custom">
-      
-      {/* Text Blocks List Section */}
-      <div className="p-5 border-b border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center justify-between">
+    <div className="w-full lg:w-96 bg-white border-l border-slate-200 flex flex-col max-h-full overflow-y-auto scrollbar-custom shrink-0 text-slate-800">
+
+      {/* Text Blocks list */}
+      <div className="p-5 border-b border-slate-100">
+        <h3 className="text-sm font-bold text-slate-700 mb-4 flex items-center justify-between">
           <span>📋 Text Blocks</span>
-          {/* Badge showing count of text blocks on current page */}
-          <span className="text-sm bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+          <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-bold">
             {currentPageBlocks.length}
           </span>
         </h3>
-        {/* Render list of text blocks */}
         <TextBlockList
           blocks={currentPageBlocks}
           selectedBlock={selectedBlock}
@@ -48,9 +35,9 @@ const Sidebar = ({
         />
       </div>
 
-      {/* Edit Panel - Only shown when a block is selected */}
+      {/* Edit Panel */}
       {selectedBlock && (
-        <div className="p-5 border-b border-gray-200">
+        <div className="p-5 border-b border-slate-100">
           <EditPanel
             selectedBlock={selectedBlock}
             onApplyEdit={onApplyEdit}
@@ -59,40 +46,32 @@ const Sidebar = ({
         </div>
       )}
 
-      {/* Tips Section - Helpful hints for users */}
+      {/* Tips */}
       {showTips && (
-        <div className="p-5 bg-gradient-to-r from-blue-50 to-indigo-50 m-4 rounded-xl">
+        <div className="m-4 p-4 bg-green-50/50 border border-green-100 rounded-xl">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              {/* Tips header */}
               <div className="flex items-center gap-2 mb-3">
-                <Lightbulb className="w-5 h-5 text-yellow-500" />
-                <h4 className="font-semibold text-gray-800">Quick Tips</h4>
+                <Lightbulb className="w-4 h-4 text-amber-500" />
+                <h4 className="text-xs font-bold text-slate-700">Quick Tips</h4>
               </div>
-              {/* Tips list */}
-              <ul className="space-y-2 text-sm text-gray-700">
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-500">•</span>
-                  Click text on PDF to select
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-500">•</span>
-                  Edit font size & color
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-500">•</span>
-                  Save directly as PDF
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-500">•</span>
-                  No Word conversion needed
-                </li>
+              <ul className="space-y-1.5 text-xs text-slate-500">
+                {[
+                  'Click text on the PDF canvas to select it',
+                  'Edit font size & color in this panel',
+                  'Press Apply Changes to update the preview',
+                  'Save directly as a PDF when done',
+                ].map((tip) => (
+                  <li key={tip} className="flex items-start gap-2">
+                    <span className="text-green-500 mt-0.5">•</span>
+                    {tip}
+                  </li>
+                ))}
               </ul>
             </div>
-            {/* Close tips button */}
             <button
               onClick={() => setShowTips(false)}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-slate-400 hover:text-slate-600 text-xs ml-2"
             >
               ✕
             </button>
